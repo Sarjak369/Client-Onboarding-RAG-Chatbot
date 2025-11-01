@@ -4,7 +4,7 @@ import streamlit as st
 class AssistantGUI:
     def __init__(self, assistant):
         self.assistant = assistant
-        self.messages = assistant.messages
+        self.messages = assistant.message_history
         self.employee_information = assistant.employee_information
 
     def get_response(self, user_input):
@@ -27,13 +27,14 @@ class AssistantGUI:
         if user_input and user_input != "":
             st.chat_message("human").markdown(user_input)
 
-            response_generator = self.get_response(user_input)
-
+            response_stream = self.get_response(user_input)
             with st.chat_message("ai"):
-                response = st.write_stream(response_generator)
+                response = st.write_stream(response_stream)
 
             self.messages.append({"role": "user", "content": user_input})
             self.messages.append({"role": "ai", "content": response})
+
+            self.set_state("messages", self.messages)
 
             self.set_state("messages", self.messages)
 

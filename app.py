@@ -7,6 +7,11 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 from langchain_chroma import Chroma
 import logging
+from assistant import Assistant
+from prompt import SYSTEM_PROMPT, WELCOME_MESSAGE
+from langchain_groq import ChatGroq
+from gui import AssistantGUI
+
 
 if __name__ == "__main__":
 
@@ -34,7 +39,7 @@ if __name__ == "__main__":
             loader = PyPDFLoader(pdf_path)
             docs = loader.load()
             text_splitter = RecursiveCharacterTextSplitter(
-                chunk_size=4000, chunk_overlap=200)
+                chunk_size=2000, chunk_overlap=200)
             splits = text_splitter.split_documents(docs)
 
             embedding_provider = OpenAIEmbeddings()
@@ -50,5 +55,25 @@ if __name__ == "__main__":
             st.error(f"Failed to initialize vector store: {str(e)}")
             return None
 
-    user_data = get_user_data()
+    customer_data = get_user_data()
+
     vectorstore = init_vectorstore("data/umbrella_corp_policies.pdf")
+
+    llm_model = ChatGroq(model="llama-3.3-70b-versatile")
+
+    if "customer" not in st.session_state:
+        st.session_state.customer = customer_data
+    if "messages" not in st.session_state:
+        st.session_state.messages = [
+            {"role": "ai", "content": WELCOME_MESSAGE}]
+
+    assistant = Assistant(
+        system_prompt=SYSTEM_PROMPT,
+        llm=llm_model,
+        message_history=st.session_state.messages,
+        employee_information=st.session_state.customer,
+        vector_store=vectorstore
+    )
+
+    gui = AssistantGUI(assistant)
+    gui.render()

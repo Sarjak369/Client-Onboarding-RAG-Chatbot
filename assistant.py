@@ -22,8 +22,7 @@ class Assistant():
         self.chain = self._get_conversation_chain()
 
     def get_response(self, user_input):
-        response = self.chain.invoke({"user_input": user_input})
-        return response
+        return self.chain.stream({"user_input": user_input})
 
     def _get_conversation_chain(self):
 
@@ -49,7 +48,12 @@ class Assistant():
         chain = (
             {
                 # Uses your vector DB retriever to fetch policy chunks based on the question.
-                "retrieved_policy_information": self.vector_store.as_retriever() if self.vector_store else None,
+                "retrieved_policy_information": (
+                    lambda x: self.vector_store.as_retriever().invoke(
+                        x["user_input"] if isinstance(x, dict) else x
+                    )
+                    if self.vector_store else None
+                ),
                 # A small function that injects employee info (so the model can personalize answers).
                 "employee_information": lambda x: self.employee_information,
                 # Passes the raw user input directly into the prompt.
