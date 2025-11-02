@@ -1,13 +1,135 @@
-# Python-generated files
+# ----------------------------
+# 🧠 Python & Virtual Environment
+# ----------------------------
 __pycache__/
-*.py[oc]
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.egg
+*.log
+.venv/
+env/
+venv/
+ENV/
+venv.bak/
 build/
 dist/
-wheels/
-*.egg-info
+pip-wheel-metadata/
+*.spec
 
-# Virtual environments
-.venv
-
+# ----------------------------
+# ☁️ Environment & Config
+# ----------------------------
 .env
-data/
+.env.*
+*.ini
+*.cfg
+config.json
+settings.json
+secrets.json
+
+# ----------------------------
+# 🧱 Streamlit & Cache Files
+# ----------------------------
+.streamlit/
+.cache/
+.cache/
+**/.streamlit/secrets.toml
+**/.streamlit/config.toml
+
+# ----------------------------
+# 🧩 LangChain / Vectorstore / Chroma
+# ----------------------------
+chroma_db/
+vectorstore/
+*.faiss
+*.pkl
+*.jsonl
+
+# ----------------------------
+# 🗄️ Databases & Local Data
+# ----------------------------
+*.db
+*.sqlite3
+*.sql
+*.csv
+*.json
+*.xlsx
+*.xls
+*.parquet
+*.pickle
+
+# ----------------------------
+# 🧰 IDE / OS Files
+# ----------------------------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.tmp
+*.bak
+
+# ----------------------------
+# 🎙️ Audio / Transcripts (for Whisper)
+# ----------------------------
+*.wav
+*.mp3
+*.flac
+*.m4a
+*.ogg
+*.opus
+*.webm
+recordings/
+transcripts/
+
+# ----------------------------
+# 🧪 Testing / Experiment Outputs
+# ----------------------------
+test_output/
+debug_logs/
+logs/
+runs/
+*.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/
+
+# ----------------------------
+# 🧠 Model Weights / Checkpoints
+# ----------------------------
+*.pt
+*.onnx
+*.ckpt
+*.h5
+*.tflite
+*.pkl
+models/
+weights/
+checkpoints/
+
+# ----------------------------
+# 🚀 Deployment Artifacts
+# ----------------------------
+*.tar.gz
+*.zip
+*.bak
+*.backup
+*.old
+*.out
+*.pid
+
+# ----------------------------
+# 🧾 MacOS Metadata
+# ----------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ----------------------------
+# 🧠 Pyproject Lock (optional)
+# ----------------------------
+uv.lock
+poetry.lock
+Pipfile.lock

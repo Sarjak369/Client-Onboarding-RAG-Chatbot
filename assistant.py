@@ -1,8 +1,3 @@
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnablePassthrough
-
-
 class Assistant():
     # brain of the chatbot
     def __init__(
@@ -25,6 +20,10 @@ class Assistant():
         return self.chain.stream({"user_input": user_input})
 
     def _get_conversation_chain(self):
+
+        from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+        from langchain_core.output_parsers import StrOutputParser
+        from langchain_core.runnables import RunnablePassthrough
 
         prompt = ChatPromptTemplate(
             # Defines the message structure given to the LLM

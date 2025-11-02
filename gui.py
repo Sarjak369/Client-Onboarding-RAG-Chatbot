@@ -1,53 +1,62 @@
 import streamlit as st
+from datetime import datetime
 
 
 class AssistantGUI:
     def __init__(self, assistant):
         self.assistant = assistant
-        self.messages = assistant.message_history
+        self.messages = st.session_state.get("messages", [])
         self.employee_information = assistant.employee_information
 
     def get_response(self, user_input):
         return self.assistant.get_response(user_input)
 
     def render_messages(self):
-        messages = self.messages
-
-        for message in messages:
-            if message["role"] == "user":
-                st.chat_message("human").markdown(message["content"])
-            if message["role"] == "ai":
-                st.chat_message("ai").markdown(message["content"])
-
-    def set_state(self, key, value):
-        st.session_state[key] = value
+        if not self.messages:
+            st.chat_message("ai").markdown(
+                "🧠 **Umbrella Assistant Online.** How can I assist you today?"
+            )
+        for message in self.messages:
+            role_icon = "👤" if message["role"] == "user" else "☂️"
+            with st.chat_message(message["role"], avatar=role_icon):
+                st.markdown(message["content"])
 
     def render_user_input(self):
-        user_input = st.chat_input("Type here...", key="input")
-        if user_input and user_input != "":
-            st.chat_message("human").markdown(user_input)
+        user_input = st.chat_input("Type your query securely here...")
+        if user_input:
+            self.messages.append({"role": "user", "content": user_input})
+            st.chat_message("user", avatar="👤").markdown(user_input)
 
-            response_stream = self.get_response(user_input)
-            with st.chat_message("ai"):
+            with st.chat_message("ai", avatar="☂️"):
+                response_stream = self.get_response(user_input)
                 response = st.write_stream(response_stream)
 
-            self.messages.append({"role": "user", "content": user_input})
             self.messages.append({"role": "ai", "content": response})
+            st.session_state["messages"] = self.messages
 
-            self.set_state("messages", self.messages)
-
-            self.set_state("messages", self.messages)
+    def render_sidebar_profile(self):
+        with st.sidebar:
+            st.image(
+                "https://upload.wikimedia.org/wikipedia/commons/0/0e/Umbrella_Corporation_logo.svg",
+                width=120,
+            )
+            st.markdown("### 🧾 Employee Profile")
+            st.markdown(
+                f"**Name:** {self.employee_information['name']} {self.employee_information['lastname']}")
+            st.markdown(f"**Email:** {self.employee_information['email']}")
+            st.markdown(
+                f"**Department:** {self.employee_information['department']}")
+            st.markdown(
+                f"**Position:** {self.employee_information['position']}")
+            st.markdown(
+                f"**Supervisor:** {self.employee_information['supervisor']}")
+            st.markdown(
+                f"**Location:** {self.employee_information['location']}")
+            st.markdown("---")
+            st.caption(
+                f"Active Session: {datetime.now().strftime('%H:%M:%S')}")
 
     def render(self):
-        with st.sidebar:
-            st.logo(
-                "https://upload.wikimedia.org/wikipedia/commons/0/0e/Umbrella_Corporation_logo.svg"
-            )
-            st.title("Umbrella Corporation Assistant")
-
-            st.subheader("Employee Information")
-            st.write(self.employee_information)
-
+        self.render_sidebar_profile()
         self.render_messages()
-
         self.render_user_input()
