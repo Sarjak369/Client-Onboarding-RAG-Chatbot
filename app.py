@@ -2,6 +2,7 @@ import streamlit as st
 import logging
 from dotenv import load_dotenv
 from sqlalchemy import text
+# from langchain_openai import ChatOpenAI
 
 # 🔐 Auth + DB
 from auth.signup import signup
@@ -59,7 +60,7 @@ def main():
         st.rerun()
 
     # Header
-    st.title("Umbrella Corporation Internal Assistant 🧬")
+    st.title("Umbrella Corporation Internal Assistant ☂️")
     st.markdown(
         "<p style='color:#c4c4c4;font-size:16px;'>Welcome to your secure Umbrella onboarding environment. "
         "Proceed with caution and adhere to internal protocols.</p>",
@@ -70,7 +71,8 @@ def main():
     # Assistant once per session
     if not st.session_state["assistant"]:
         # llama-3.1-8b-instant or llama-3.3-70b-versatile
-        llm = ChatGroq(model="llama-3.1-8b-instant")
+        llm = ChatGroq(model="llama-3.3-70b-versatile")
+        # llm = ChatOpenAI(model="gpt-4o-mini")
         st.session_state["assistant"] = Assistant(
             system_prompt=SYSTEM_PROMPT,
             llm=llm,
