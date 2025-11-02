@@ -6,9 +6,11 @@ readme = "README.md"
 requires-python = ">=3.11.9"
 dependencies = [
     "bcrypt>=5.0.0",
+    "gtts>=2.5.4",
     "passlib[bcrypt]>=1.7.4",
     "psycopg2-binary>=2.9.11",
     "python-dotenv>=1.2.1",
+    "pyttsx3>=2.99",
     "sqlalchemy>=2.0.44",
     "streamlit-authenticator>=0.4.2",
 ]
