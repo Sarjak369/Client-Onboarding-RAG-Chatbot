@@ -14,11 +14,15 @@ It uses **PostgreSQL + SQLAlchemy** for structured employee/auth data, and **Chr
 
 New employees joining large organizations face several challenges during onboarding:
 
-Information Overload: Lengthy employee handbooks and policy documents are overwhelming
-Delayed Responses: HR teams can't provide instant answers to common questions 24/7
-Generic Experience: One-size-fits-all onboarding doesn't account for department-specific needs
-Accessibility: Important information is scattered across multiple documents and portals
-Language Barriers: Reading complex documents is time-consuming; voice interaction is more natural
+- **Information Overload:** Lengthy employee handbooks and policy documents are overwhelming
+
+- **Delayed Responses:** HR teams can't provide instant answers to common questions 24/7
+
+- **Generic Experience:** One-size-fits-all onboarding doesn't account for department-specific needs
+
+- **Accessibility:** Important information is scattered across multiple documents and portals
+
+- **Language Barriers:** Reading complex documents is time-consuming; voice interaction is more natural
 
 The Challenge: How do we create an intelligent, personalized, and accessible onboarding experience that provides instant, accurate answers while reducing the burden on HR teams?
 
